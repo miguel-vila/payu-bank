@@ -5,6 +5,7 @@ import payu.models.Movement;
 import payu.models.MovementType;
 import payu.utils.DateUtils;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,19 +16,15 @@ import java.util.stream.Stream;
  */
 public class AccountReport {
 
+    private Long accountNumber;
+
+    private BigDecimal balance;
+
     private List<Movement> creditMovements;
 
     private List<Movement> debitMovements;
 
     public AccountReport(){
-    }
-
-    public AccountReport(
-            List<Movement> creditMovements,
-            List<Movement> debitMovements
-    ) {
-        this.creditMovements = creditMovements;
-        this.debitMovements = debitMovements;
     }
 
     public List<Movement> getCreditMovements() {
@@ -46,19 +43,38 @@ public class AccountReport {
         this.debitMovements = debitMovements;
     }
 
+    public Long getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(Long accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
     public static AccountReport fromAccount(Account account, Date start, Date end){
         AccountReport report = new AccountReport();
 
-        Stream<Movement> filteredMovements = account
+        List<Movement> filteredMovements = account
                 .getMovements()
                 .stream()
-                .filter(mov -> DateUtils.isInBetween(mov.getDate(), start, end));
+                .filter(mov -> DateUtils.isInBetween(mov.getDate(), start, end))
+                .collect(Collectors.toList());
 
-        List<Movement> credits = filteredMovements.filter(mov -> mov.getType().equals(MovementType.CREDIT)).collect(Collectors.toList());
-        List<Movement> debits = filteredMovements.filter(mov -> mov.getType().equals(MovementType.DEBIT)).collect(Collectors.toList());
+        List<Movement> credits = filteredMovements.stream().filter(mov -> mov.getType().equals(MovementType.CREDIT)).collect(Collectors.toList());
+        List<Movement> debits = filteredMovements.stream().filter(mov -> mov.getType().equals(MovementType.DEBIT)).collect(Collectors.toList());
 
         report.setCreditMovements(credits);
         report.setDebitMovements(debits);
+        report.setAccountNumber(account.getNumber());
+        report.setBalance(account.getBalance());
 
         return report;
     }
