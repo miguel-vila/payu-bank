@@ -37,10 +37,6 @@ Para crear el esquema no es necesario ejecutar ningún comando, spring se encarg
 | Spring boot    | 1.2.4  |
 | Postgres    | 9.3 |
 
-## Manual de usuario
-
-La aplicación se puede usar mediante un cliente REST como CURL o Postman.
-
 ## Empaquetado y ejecución
 
 Para empaquetar a partir del código fuente debe ejecutar:
@@ -56,6 +52,10 @@ Dicho jar se puede ejecutar usando:
 ```bash
 java -jar target/payu-bank-0.1.0.jar
 ```
+
+## Manual de usuario
+
+La aplicación se puede usar mediante un cliente REST como CURL o Postman.
 
 Se tienen cuatro recursos principales:
 
@@ -261,7 +261,7 @@ Body:
 
 ### Reportes
 
-#### Generar un reporte
+#### Generar un reporte por rango de fechas
 
 **Parámetros de entrada:**
 
@@ -332,4 +332,4 @@ Body:
 ]
 ```
 
-Dónde `totalCredit` es el cŕedito total en el intervalo de fechas provisto y `totalDebit` es el débito total en el intervalo de fechas provisto.
+Dónde `totalCredit` es el cŕedito total en el intervalo de fechas provisto y `totalDebit` es el débito total en el intervalo de fechas provisto y `balance` es la diferencia entre ambos.
