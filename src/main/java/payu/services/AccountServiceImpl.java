@@ -33,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public void deleteAccount(Long accountId) {
-        clientRepo.delete(accountId);
+        accountRepository.delete(accountId);
     }
 
     public List<AccountReport> filterAccounts(Long clientId, Date start, Date end) throws ClientDoesntExistException {
