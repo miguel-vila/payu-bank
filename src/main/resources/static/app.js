@@ -25,7 +25,7 @@ payuBankApp.config(function ($stateProvider) {
 		}).
 		state('payu.account-detail',{
 			url: 'accounts/:accountId',
-			templateUrl: './vies/account-detail.html',
+			templateUrl: './views/account-detail.html',
 			controller: 'AccountDetailController'
 		});
 });
