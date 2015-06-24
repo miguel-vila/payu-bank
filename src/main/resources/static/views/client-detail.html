@@ -1,0 +1,17 @@
+<form name="updateClientForm">
+	<ng-include src="'./views/client-template.html'"></ng-include>
+	{{responseMessage}}
+	<button ng-click="update()">Update client</button>
+	<div>
+		<h2>Accounts:</h2>
+		<div ng-if="accounts.length === 0">
+			The client doesn't have any account
+		</div>
+		<div ng-repeat="account in accounts">
+			<label>Account number:</label> {{account.number}}
+			<label>Account balance:</label> {{account.balance}}
+			<a href="/#/accounts/{{account.number}}">Account detail</a>
+		</div>
+		<button ng-click="createEmptyAccount()">Create new account</button>
+	</div>
+</form>

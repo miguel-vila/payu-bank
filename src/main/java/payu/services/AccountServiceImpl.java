@@ -22,6 +22,14 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+    public Iterable<Account> getClientAccounts(Long clientId) {
+        Client client = clientRepo.findOne(clientId);
+        System.out.println("client = "+client);
+        Iterable<Account> accounts = client.getAccounts();
+        System.out.println("accounts = "+accounts);
+        return accounts;
+    }
+
     public Account createEmptyAccountForClientWithId(Long clientId) throws ClientDoesntExistException {
         Client client = clientRepo.findOne(clientId);
         if(client == null){
@@ -34,6 +42,10 @@ public class AccountServiceImpl implements AccountService {
 
     public void deleteAccount(Long accountId) {
         accountRepository.delete(accountId);
+    }
+
+    public Account getAccount(Long number) {
+        return accountRepository.findOne(number);
     }
 
     public List<AccountReport> filterAccounts(Long clientId, Date start, Date end) throws ClientDoesntExistException {

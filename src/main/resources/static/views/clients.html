@@ -1,0 +1,22 @@
+<h2>Clients</h2>
+<div ng-if="clients && clients.length>0">
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Address</th>
+			<th>Phone</th>
+			<th></th>
+			<th></th>
+		</tr>
+		<tr ng-repeat="client in clients">
+			<td>{{client.name}}</td>
+			<td>{{client.address}}</td>
+			<td>{{client.phone}}</td>
+			<td><a href="/#/clients/{{client.id}}">Client detail</a></td>
+			<td><button ng-click="delete(client.id)">Delete</button></td>
+		</tr>
+	</table>
+</div>
+<div ng-if="clients.length === 0">
+	<h3>Ningun cliente encontrado</h3>
+</div>

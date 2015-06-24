@@ -26,15 +26,15 @@ public class MovementController {
             @PathVariable Long accountId,
             @Valid @RequestBody NewMovementData newMovementData) {
         if(newMovementData.getAmmount() == null || newMovementData.getType() == null){
-            return new ResponseEntity("Required 'ammount' and 'type' fields", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("\"Required 'ammount' and 'type' fields\"", HttpStatus.BAD_REQUEST);
         }
         try {
             movementService.createMovement(accountId, newMovementData);
-            return new ResponseEntity("Movement created successfully", HttpStatus.CREATED);
+            return new ResponseEntity("\"Movement created successfully\"", HttpStatus.CREATED);
         } catch (InvalidMovementTypeException e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("\""+e.getMessage()+"\"", HttpStatus.BAD_REQUEST);
         } catch (InsufficientFundsException e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("\""+e.getMessage()+"\"", HttpStatus.BAD_REQUEST);
         }
     }
 

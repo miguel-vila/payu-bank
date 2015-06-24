@@ -1,14 +1,18 @@
 package payu.services;
 
+import payu.infrastructure.data.ClientItem;
+import payu.infrastructure.exceptions.BadRequestException;
 import payu.models.Client;
 
 public interface ClientService {
 
-   public Client createClient(Client client);
+   public Long createClient(Client client) throws BadRequestException;
 
-   public Client findById(Long id);
+   public void updateClient(Client client) throws BadRequestException;
 
-   public Iterable<Client> findAll();
+   public ClientItem findById(Long id);
+
+   public Iterable<ClientItem> findAll();
 
    public void deleteClient(Long id);
 }
