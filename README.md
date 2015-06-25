@@ -55,281 +55,62 @@ java -jar target/payu-bank-0.1.0.jar
 
 ## Manual de usuario
 
-La aplicación se puede usar mediante un cliente REST como CURL o Postman.
-
-Se tienen cuatro recursos principales:
-
-* Clientes (ruta `/clients`)
-* Cuentas (rutas  `/accounts/{id}` y `/clients/{clientId}/accounts`)
-* Movimientos (ruta `/accounts/{accountId}/movements`)
-* Reportes (ruta `/reports/client-accounts-by-date-range`)
-
-### Client
-
-#### Crear un cliente
-
-**Parámetros de entrada:**
-
-Ruta: `/clients`
-
-Método: POST
-
-JSON de ejemplo:
-
-```json
-{
-    "name": "Miguel",
-    "address": "cra 123",
-    "phone": "123457"
-}
-```
-
-**Respuesta esperada:**
-
-HTTP Status: Created
-
-Body:
-
-```json
-"Client successfully created with id: {clientId}"
-```
-
-#### Consultar todos los clientes
-
-**Parámetros de entrada:**
-
-Ruta: `/clients`
-
-Método: GET
-
-**Respuesta esperada:**
+El entorno gráfico de la aplicación se accede a través de la url [http:localhost:8080/#/](http:localhost:8080/#/) (importante no omitir el `/#/` al final)
 
-HTTP Status: Ok
+### Crear un nuevo cliente
 
-Body:
+Para crear un nuevo cliente se debe:
 
-```json
-[
-   {
-      "id":6,
-      "name":"Miguel",
-      "address":"cra 123",
-      "phone":"123457",
-      "accounts":[
-         {
-            "number":2,
-            "balance":3450000.00,
-            "movements":[
-               {
-                  "id":9,
-                  "type":"DEBIT",
-                  "date":"22-06-2015 01:08:08",
-                  "value":1000000.00
-               },
-               {
-                  "id":10,
-                  "type":"DEBIT",
-                  "date":"22-06-2015 01:08:19",
-                  "value":2500000.00
-               },
-               {
-                  "id":13,
-                  "type":"CREDIT",
-                  "date":"22-06-2015 01:08:50",
-                  "value":50000.00
-               }
-            ]
-         }
-      ]
-   },
-   {
-      "id":7,
-      "name":"Luisa",
-      "address":"cra 456",
-      "phone":"987654",
-      "accounts":[
-         {
-            "number":3,
-            "balance":4750000.00,
-            "movements":[
-               {
-                  "id":11,
-                  "type":"DEBIT",
-                  "date":"22-06-2015 01:08:29",
-                  "value":5000000.00
-               },
-               {
-                  "id":12,
-                  "type":"CREDIT",
-                  "date":"22-06-2015 01:08:42",
-                  "value":250000.00
-               }
-            ]
-         }
-      ]
-   }
-]
-```
+* Dar click en la pestaña `Create new client` o ir a la url [http://localhost:8080/#/new-client](http://localhost:8080/#/new-client)
+* Llenar los datos básicos del cliente
+* Dar click en el botón `Save client`
 
-#### Eliminar un cliente
+![crear cliente](https://raw.githubusercontent.com/miguel-vila/payu-bank/master/doc/create-client.gif)
 
-**Parámetros de entrada:**
+### Listar los clientes creados
 
-Ruta: `/clients/{id}` dónde `{id}` es el identificador del cliente a eliminar
+* Dar click en la pestaña `Clients` o ir a la url [http://localhost:8080/#/clients](http://localhost:8080/#/clients)
 
-Método: DELETE
+![listar clientes](https://raw.githubusercontent.com/miguel-vila/payu-bank/master/doc/query-clients.gif)
 
-**Respuesta esperada:**
+### Actualizar un cliente
 
-HTTP Status: Ok
+* Dar click en la pestaña `Clients` o ir a la url [http://localhost:8080/#/clients](http://localhost:8080/#/clients)
+* Dar click en el link `Client detail` del cliente que se quiere actualizar
+* Actualizar los campos deseados
+* Dar click en el botón `Update client`
 
-Body:
+![listar clientes](https://raw.githubusercontent.com/miguel-vila/payu-bank/master/doc/update-client.gif)
 
-```json
-"Client successfully deleted"
-```
+### Eliminar un cliente
 
-### Accounts
+* Dar click en la pestaña `Clients` o ir a la url [http://localhost:8080/#/clients](http://localhost:8080/#/clients)
+* Dar click en el botón `Delete` del cliente que se quiere eliminar
 
-#### Crear una cuenta vacía para un cliente
+![eliminar cliente](https://raw.githubusercontent.com/miguel-vila/payu-bank/master/doc/delete-client.gif)
 
-**Parámetros de entrada:**
+### Crear una cuenta y agregar movimientos
 
-Ruta: `/clients/{clientId}/accounts` dónde `{clientId}` es el identificador del cliente al que se le quiere crear la nueva cuenta
+* Dar click en la pestaña `Clients` o ir a la url [http://localhost:8080/#/clients](http://localhost:8080/#/clients)
+* Dar click en el link `Client detail` del cliente deseado
+* Dar click en el botón `Create new account`
+* Seleccione el monto y el tipo de movimiento que desee realizar
+* Dé click en el botón `Create movement`
 
-Método: POST
+![crear cuenta](https://raw.githubusercontent.com/miguel-vila/payu-bank/master/doc/create-account-and-movements.gif)
 
-No es necesario mandar nada en el body. La cuenta se creará con un balance de 0.0 y sin movimientos.
+### Eliminar una cuenta
 
-**Respuesta esperada:** 
+* Dar click en la pestaña `Clients` o ir a la url [http://localhost:8080/#/clients](http://localhost:8080/#/clients)
+* Dar click en el link `Client detail` del cliente deseado
+* Dar click en el botón `Delete account` de la cuenta que se desea eliminar
 
-HTTP Status: Created
+![eliminar cuenta](https://raw.githubusercontent.com/miguel-vila/payu-bank/master/doc/delete-account.gif)
 
-Body:
+### Reporte de cuentas y movimientos por rango de fechas
+* Dar click en la pestaña `Date Range Report` o ir al enlace [http://localhost:8080/#/date-range-report](http://localhost:8080/#/date-range-report)
+* Asignar los valores de fecha de inicio y de fecha de fin del rango con su respectivos valores de fecha, hora, minutos y segundos.
+* Elegir un cliente de la lista desplegable
+* Dar click en el botón `Get report`
 
-```json
-"Account added successfully with id {accountId}
-```
-
-#### Eliminar una cuenta
-
-**Parámetros de entrada:**
-
-Ruta: `\accounts\{id}` dónde `{id}` es el identificador de la cuenta que se quiere eliminar
-
-Método: DELETE
-
-**Respuesta esperada:**
-
-HTTP Status: Ok
-
-Body:
-
-```json
-"Account deleted successfully"
-```
-
-### Movimientos
-
-#### Realizar un movimiento en una cuenta
-
-**Parámetros de entrada:**
-
-Ruta: `\accounts\{accountId}\movements` dónde `{accountId}` es el identificador de la cuenta en la que se quiere realizar el movimiento.
-
-Método: POST
-
-**Respuesta esperada:**
-
-HTTP Status: Created
-
-Body:
-
-```json
-"Movement created successfully"
-```
-
-**Respuesta en caso de que el saldo no sea suficiente:**
-
-HTTP Status: Bad Request
-
-Body:
-
-```json
-"The account with id {accountId} has insufficient funds to perform the movement"
-```
-
-### Reportes
-
-#### Generar un reporte por rango de fechas
-
-**Parámetros de entrada:**
-
-Ruta: `/reports/client-accounts-by-date-range`
-
-Método: POST
-
-Body:
-
-```json
-{
-    "clientId": 6,
-    "start": "21-06-2015 22:00:00",
-    "end": "22-06-2015 02:00:00"
-}
-```
-
-Las fechas deben estar en el formato `dd-MM-yyyy HH:mm:ss`
-
-**Respuesta esperada:**
-
-HTTP Status: Ok
-
-Body:
-
-```json
-[
-   {
-      "accountNumber":2,
-      "balance":8500000.00,
-      "totalCredit":50000.00,
-      "totalDebit":8550000.00,
-      "creditMovements":[
-         {
-            "id":13,
-            "type":"CREDIT",
-            "date":"22-06-2015 01:08:50",
-            "value":50000.00
-         }
-      ],
-      "debitMovements":[
-         {
-            "id":9,
-            "type":"DEBIT",
-            "date":"22-06-2015 01:08:08",
-            "value":1000000.00
-         },
-         {
-            "id":10,
-            "type":"DEBIT",
-            "date":"22-06-2015 01:08:19",
-            "value":2500000.00
-         },
-         {
-            "id":14,
-            "type":"DEBIT",
-            "date":"22-06-2015 01:43:29",
-            "value":50000.00
-         },
-         {
-            "id":15,
-            "type":"DEBIT",
-            "date":"22-06-2015 01:43:36",
-            "value":5000000.00
-         }
-      ]
-   }
-]
-```
-
-Dónde `totalCredit` es el cŕedito total en el intervalo de fechas provisto y `totalDebit` es el débito total en el intervalo de fechas provisto y `balance` es la diferencia entre ambos.
+![report](https://raw.githubusercontent.com/miguel-vila/payu-bank/master/doc/date-range-report.gif)
