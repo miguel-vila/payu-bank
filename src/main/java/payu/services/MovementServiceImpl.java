@@ -22,17 +22,17 @@ public class MovementServiceImpl implements MovementService {
     @Autowired
     private MovementRepository movementRepo;
 
-    public void createMovement(Long accountId, NewMovementData newMovementData) throws InsufficientFundsException, InvalidMovementTypeException {
+    public Movement createMovement(Long accountId, NewMovementData newMovementData) throws InsufficientFundsException, InvalidMovementTypeException {
         Account acc = accountRepo.findOne(accountId);
         Movement mv = newMovementData.toMovement();
-        saveMovement(acc, mv);
+        return saveMovement(acc, mv);
     }
 
     @Transactional
-    private void saveMovement(Account account, Movement movement) throws InsufficientFundsException {
+    private Movement saveMovement(Account account, Movement movement) throws InsufficientFundsException {
         account.applyMovement(movement);
         movement.setAccount(account);
         accountRepo.save(account);
-        movementRepo.save(movement);
+        return movementRepo.save(movement);
     }
 }

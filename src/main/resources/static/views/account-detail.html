@@ -5,20 +5,32 @@
 	<div ng-if="account.movements.length === 0">
 		The account doesn't have any movement
 	</div>
-	<div ng-repeat="mov in account.movements">
-		<label>Type: </label> {{mov.type}}
-		<label>Value: </label> {{mov.value}}
-		<label>Date: </label> {{mov.date}}
-	</div>
-	<form name="movementForm">
+	<form name="movementForm" ng-init="initializeNewMovement()">
+		<h4>Create new movement:</h4>
 		<label>Ammount:</label>
 		<input type="number" ng-model="newMov.ammount"/>
-
 		<label>Type:</label>
 		<select ng-model="newMov.type">
 			<option value="DEBIT">Debit</option>
 			<option value="CREDIT">Credit</option>
 		</select>
 		<button ng-click="createMovement()">Create Movement</button>
+		<div class="alert alert-danger" role="alert" ng-if="error">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			<span class="sr-only">Error:</span>
+			{{error}}
+	    </div>
 	</form>
+	<table ng-if="account.movements.length > 0" class="table">
+		<tr>
+			<th>Type:</th>
+			<th>Value:</th>
+			<th>Date:</th>
+		</tr>
+		<tr ng-repeat="mov in account.movements">
+			<td>{{mov.type}}</td>
+			<td>{{mov.value}}</td>
+			<td>{{mov.date}}</td>
+		</tr>
+	</table>
 </div>

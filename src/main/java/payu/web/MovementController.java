@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import payu.infrastructure.data.NewMovementData;
 import payu.infrastructure.exceptions.InsufficientFundsException;
 import payu.infrastructure.exceptions.InvalidMovementTypeException;
+import payu.models.Movement;
 import payu.services.MovementService;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 
 @Controller
 public class MovementController {
@@ -28,9 +30,12 @@ public class MovementController {
         if(newMovementData.getAmmount() == null || newMovementData.getType() == null){
             return new ResponseEntity("\"Required 'ammount' and 'type' fields\"", HttpStatus.BAD_REQUEST);
         }
+        if(newMovementData.getAmmount().compareTo(BigDecimal.ZERO) <= 0) {
+            return new ResponseEntity<String>("\"The 'ammount' field must be a positive number\"", HttpStatus.BAD_REQUEST);
+        }
         try {
-            movementService.createMovement(accountId, newMovementData);
-            return new ResponseEntity("\"Movement created successfully\"", HttpStatus.CREATED);
+            Movement createdMovement = movementService.createMovement(accountId, newMovementData);
+            return new ResponseEntity(createdMovement, HttpStatus.CREATED);
         } catch (InvalidMovementTypeException e) {
             return new ResponseEntity("\""+e.getMessage()+"\"", HttpStatus.BAD_REQUEST);
         } catch (InsufficientFundsException e) {

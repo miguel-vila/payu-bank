@@ -29,4 +29,14 @@ angular.module('payuBank.controllers').controller('ClientDetailController', func
 		});
 	};
 
+	$scope.deleteAccount = function (accountNumber) {
+		$http.delete('/accounts/'+accountNumber).then(function () {
+			$scope.accounts = $scope.accounts.filter(function (account) {
+				return account.number != accountNumber;
+			});
+		}, function (error) {
+			console.log(error);
+		});
+	};
+
 });

@@ -27,5 +27,10 @@ payuBankApp.config(function ($stateProvider) {
 			url: 'accounts/:accountId',
 			templateUrl: './views/account-detail.html',
 			controller: 'AccountDetailController'
+		}).
+		state('payu.date-range-report',{
+			url: 'date-range-report',
+			templateUrl: './views/date-range-report.html',
+			controller: 'DateRangeReportController'
 		});
 });

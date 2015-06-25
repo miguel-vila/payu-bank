@@ -24,6 +24,9 @@ public class ReportController {
     @RequestMapping(value = "/reports/client-accounts-by-date-range", method = RequestMethod.POST)
     @ResponseBody
     public List<AccountReport> getReport(@Valid @RequestBody AccountReportParams params) throws ClientDoesntExistException {
+        System.out.println("clientId = "+params.getClientId());
+        System.out.println("start = "+params.getStart());
+        System.out.println("end = "+params.getEnd());
         return accountService.filterAccounts(params.getClientId(), params.getStart(), params.getEnd());
     }
 

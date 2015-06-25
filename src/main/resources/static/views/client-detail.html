@@ -13,11 +13,13 @@
 					<th>Account number</th>
 					<th>Balance</th>
 					<th></th>
+					<th></th>
 				</tr>
 				<tr ng-repeat="account in accounts">
 					<td>{{account.number}}</td>
 					<td>{{account.balance}}</td>
 					<td><a href="/#/accounts/{{account.number}}">Account detail</a></td>
+					<td><button ng-click="deleteAccount(account.number)">Delete account</button></td>
 				</tr>
 			</table>
 		</div>

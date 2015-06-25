@@ -1,0 +1,68 @@
+<form name="dateRangeForm">
+	<h3>Start date:</h3>
+	<input ng-model="startDay" type="date" ng-init="startDay = newDate()"/>
+	<input ng-model="startHour" type="number" min="0" max="23" ng-init="startHour = 12"/>:
+	<input ng-model="startMinutes" type="number" min="0" max="59" ng-init="startMinutes=30"/>:
+	<input ng-model="startSeconds" type="number" min="0" max="59" ng-init="startSeconds=30"/>
+	<h3>End date:</h3>
+	<input ng-model="endDay" type="date" ng-init="endDay = newDate()"/>
+	<input ng-model="endHour" type="number" min="0" max="23" ng-init="endHour = 12"/>:
+	<input ng-model="endMinutes" type="number" min="0" max="59" ng-init="endMinutes=30"/>:
+	<input ng-model="endSeconds" type="number" min="0" max="59" ng-init="endSeconds=30"/>
+	<span>
+		<h3>Client:</h3>
+		<select ng-model="clientId" ng-options="client.id as client.name for client in clients">
+		</select>
+	</span>
+	<div>
+		<button ng-click="getReport()">Get report</button>
+	</div>
+
+	<div class="alert alert-danger" role="alert" ng-if="error">
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		<span class="sr-only">Error:</span>
+		{{error}}
+	</div>
+
+	<div ng-if="accounts.length === 0">
+		<h3>No account found</h3>
+	</div>
+
+	<div ng-if="accounts && accounts.length > 0">
+		<div ng-repeat="account in accounts">
+		<h2>Account number {{account.accountNumber}}</h2>
+		<label>Balance in between: </label> {{account.balance}}
+		<h3>Credit movements</h3>
+			<label>Total in credit movements:</label> {{account.totalCredit}}
+			<table ng-if="account.creditMovements.length > 0" class="table">
+				<tr>
+					<th>Value:</th>
+					<th>Date:</th>
+				</tr>
+				<tr ng-repeat="mov in account.creditMovements">
+					<td>{{mov.value}}</td>
+					<td>{{mov.date}}</td>
+				</tr>
+			</table>
+			<div ng-if="account.creditMovements.length == 0">
+				No credit movements registered between the dates
+			</div>
+		<h3>Debit movements</h3>
+			<label>Total in debit movements:</label> {{account.totalDebit}}
+			<table ng-if="account.debitMovements.length > 0" class="table">
+				<tr>
+					<th>Value:</th>
+					<th>Date:</th>
+				</tr>
+				<tr ng-repeat="mov in account.debitMovements">
+					<td>{{mov.value}}</td>
+					<td>{{mov.date}}</td>
+				</tr>
+			</table>
+			<div ng-if="account.debitMovements.length == 0">
+				No debit movements registered between the dates
+			</div>
+		</div>
+	</div>
+
+</form>
