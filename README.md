@@ -1,5 +1,7 @@
 # payu-bank
 
+## Ejecutable
+
 [jar compilado](https://www.dropbox.com/s/xq9z3f2r3g8abwj/payu-bank-0.1.0.jar?dl=0)
 
 para ejecutarlo:
@@ -55,7 +57,7 @@ java -jar target/payu-bank-0.1.0.jar
 
 ## Manual de usuario
 
-El entorno gráfico de la aplicación se accede a través de la url [http:localhost:8080/#/](http:localhost:8080/#/) (importante no omitir el `/#/` al final)
+El entorno gráfico de la aplicación se accede a través de la url [http:localhost:8080/#/](http:localhost:8080/#/) (importante no omitir el `/#/` al final). A continuación se describe como realizar cada acción. Cada explicación está acompañada de un gif ilustrativo.
 
 ### Crear un nuevo cliente
 
